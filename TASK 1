@@ -1,0 +1,134 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    // Arrays for item information (cases, RAM, HDD, and additional categories)
+    string caseCodes[] = {"A1", "A2"};
+    string caseDescriptions[] = {"Compact", "Tower"};
+    double casePrices[] = {75.00, 150.00};
+
+    string ramCodes[] = {"B1", "B2", "B3"};
+    string ramDescriptions[] = {"8GB", "16GB", "32GB"};
+    double ramPrices[] = {79.99, 149.99, 299.99};
+
+    string hddCodes[] = {"C1", "C2", "C3"};
+    string hddDescriptions[] = {"1TB HDD", "2TB HDD", "4TB HDD"};
+    double hddPrices[] = {49.99, 89.99, 129.99};
+
+    // Additional categories (example: graphics cards)
+    string gpuCodes[] = {"D1", "D2"};
+    string gpuDescriptions[] = {"GTX 1650", "RTX 3080"};
+    double gpuPrices[] = {249.99, 699.99};
+
+    // Selected components
+    string selectedCase, selectedRAM, selectedHDD, selectedGPU;
+    double totalPrice = 200.00;  // Basic set of components price
+    int numAdditionalItems = 0;
+
+    cout << "WELCOME TO COMPUTER SHOP!" << endl;
+    cout << " Select one case (A1 or A2): ";
+    cin >> selectedCase;
+
+    cout << "Select one RAM (B1, B2, or B3): ";
+    cin >> selectedRAM;
+
+    cout << "Select one Main Hard Disk Drive (C1, C2, or C3): ";
+    cin >> selectedHDD;
+
+    // Update the total price based on the selected components
+    for (int i = 0; i < 2; i++) {
+        if (selectedCase == caseCodes[i]) {
+            totalPrice += casePrices[i];
+            break;
+        }
+    }
+
+    for (int i = 0; i < 3; i++) {
+        if (selectedRAM == ramCodes[i]) {
+            totalPrice += ramPrices[i];
+            break;
+        }
+    }
+
+    for (int i = 0; i < 3; i++) {
+        if (selectedHDD == hddCodes[i]) {
+            totalPrice += hddPrices[i];
+            break;
+        }
+    }
+
+    // Prompt for additional items
+    char Additional_Items;
+    cout << "Do you want to purchase additional items (Y/N)? ";
+    cin >> Additional_Items;
+
+    if (Additional_Items == 'Y' || Additional_Items == 'y') {
+        cout << "Additional Categories:" << endl;
+        cout << "D1 - " << gpuDescriptions[0] << " - $" << gpuPrices[0] << endl;
+        cout << "D2 - " << gpuDescriptions[1] << " - $" << gpuPrices[1] << endl;
+
+        // Allow the user to select additional items
+        cout << "Select a GPU (D1 or D2): ";
+        cin >> selectedGPU;
+
+        for (int i = 0; i < 2; i++) {
+            if (selectedGPU == gpuCodes[i]) {
+                totalPrice += gpuPrices[i];
+                numAdditionalItems++;
+                break;
+            }
+        }
+    }
+
+    // Calculate discounts based on the number of additional items
+    double discount = 0.0;
+
+    if (numAdditionalItems == 1) {
+        discount = 0.05; // 5% discount for one additional item
+    } else if (numAdditionalItems >= 2) {
+        discount = 0.10; // 10% discount for two or more additional items
+    }
+
+    // Apply the discount and calculate the new price
+    double discountAmount = totalPrice * discount;
+    totalPrice -= discountAmount;
+
+    // Display the selected items, amount saved, and the new price
+    cout << "You have selected the following items:" << endl;
+    for (int i = 0; i < 2; i++) {
+        if (selectedCase == caseCodes[i]) {
+            cout << "Case: " << selectedCase << " - " << caseDescriptions[i] << " - $" << casePrices[i] << endl;
+            break;
+        }
+    }
+
+    for (int i = 0; i < 3; i++) {
+        if (selectedRAM == ramCodes[i]) {
+            cout << "RAM: " << selectedRAM << " - " << ramDescriptions[i] << " - $" << ramPrices[i] << endl;
+            break;
+        }
+    }
+
+    for (int i = 0; i < 3; i++) {
+        if (selectedHDD == hddCodes[i]) {
+            cout << "Main Hard Disk Drive: " << selectedHDD << " - " << hddDescriptions[i] << " - $" << hddPrices[i] << endl;
+            break;
+        }
+    }
+
+    if (Additional_Items == 'Y' || Additional_Items == 'y') {
+        for (int i = 0; i < 2; i++) {
+            if (selectedGPU == gpuCodes[i]) {
+                cout << "GPU: " << selectedGPU << " - " << gpuDescriptions[i] << " - $" << gpuPrices[i] << endl;
+                break;
+            }
+        }
+    }
+
+    cout << fixed << setprecision(2);
+    cout << "Amount Saved: $" << discountAmount << endl;
+    cout << "New Total Price: $" << totalPrice << endl;
+
+    return 0;
+}
